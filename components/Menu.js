@@ -32,7 +32,7 @@ function TombolTambah({ m, onPilih, className = '' }) {
       onClick={() => onPilih(m)}
       disabled={m.habis}
       aria-label={m.habis ? `${m.nama} habis malam ini` : `Tambah ${m.nama}${m.opsi?.length ? ', pilih opsi' : ''}`}
-      className={`grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-lampu text-malam transition hover:bg-[#ffc672] disabled:cursor-not-allowed disabled:bg-garis disabled:text-redup ${className}`}
+      className={`grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-lampu text-malam transition hover:bg-[#ffc672] disabled:cursor-not-allowed disabled:bg-garis disabled:text-redup disabled:opacity-60 ${className}`}
     >
       <Plus className="h-5 w-5" strokeWidth={2.5} />
     </button>
@@ -42,18 +42,18 @@ function TombolTambah({ m, onPilih, className = '' }) {
 /** Ubin item 2 kolom: ilustrasi mangkuk kecil, nama, deskripsi, skala pedas, label harga, tombol tambah. */
 function Ubin({ m, onPilih }) {
   return (
-    <li className={`ubin relative flex flex-col p-3 ${m.habis ? 'opacity-60' : ''}`}>
+    <li className="ubin relative flex flex-col p-3">
       <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-1">
         {m.tag?.map((t) => <Tag key={t} t={t} />)}
         {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[0.66rem] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
       </div>
-      <Mangkuk p={m.mangkuk} className="mx-auto mt-2 h-24 w-24 sm:h-28 sm:w-28" />
-      <h3 className="mt-3 text-[0.98rem] leading-tight">{m.nama}</h3>
-      <p className="potong-2 mt-1 text-[0.85rem] leading-snug text-redup">{m.deskripsi}</p>
+      <Mangkuk p={m.mangkuk} className={`mx-auto mt-2 h-24 w-24 sm:h-28 sm:w-28 ${m.habis ? 'opacity-60' : ''}`} />
+      <h3 className={`mt-3 text-[0.98rem] leading-tight ${m.habis ? 'text-pudar' : ''}`}>{m.nama}</h3>
+      <p className={`potong-2 mt-1 text-[0.85rem] leading-snug ${m.habis ? 'text-pudar' : 'text-redup'}`}>{m.deskripsi}</p>
       <div className="mt-auto flex items-end justify-between gap-2 pt-3">
         <div className="flex flex-col gap-1.5">
-          {m.opsi?.some((o) => o.id === 'pedas') && <Skala n={m.pedas} />}
-          <LabelHarga harga={m.harga} className="text-[1.05rem]" />
+          {m.opsi?.some((o) => o.id === 'pedas') && <Skala n={m.pedas} className={m.habis ? 'opacity-60' : ''} />}
+          <LabelHarga harga={m.harga} coret={m.habis} className="text-[1.05rem]" />
         </div>
         <TombolTambah m={m} onPilih={onPilih} />
       </div>
@@ -64,28 +64,29 @@ function Ubin({ m, onPilih }) {
 /** Ubin paket hemat: ukuran berbeda-beda (bento), ilustrasi mangkuk besar, harga normal dicoret. */
 function UbinPaket({ m, onPilih, besar }) {
   return (
-    <li className={`ubin relative overflow-hidden ${besar ? 'col-span-2 lg:col-span-2 lg:row-span-2' : ''} ${m.habis ? 'opacity-60' : ''}`}>
+    <li className={`ubin relative overflow-hidden ${besar ? 'col-span-2 lg:col-span-2 lg:row-span-2' : ''}`}>
       <div className={`flex h-full ${besar ? 'flex-row items-center gap-3 p-4 sm:gap-6 sm:p-6' : 'flex-col p-3 sm:p-4'}`}>
-        <div className={`${besar ? 'order-2 shrink-0' : 'mx-auto'}`}>
+        <div className={`${besar ? 'order-2 shrink-0' : 'mx-auto'} ${m.habis ? 'opacity-60' : ''}`}>
           <Mangkuk p={m.mangkuk} className={besar ? 'h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64' : 'h-24 w-24 sm:h-32 sm:w-32'} />
         </div>
         <div className={`flex min-w-0 flex-1 flex-col ${besar ? 'order-1' : 'mt-3'}`}>
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="stensil">Paket</span>
             {m.tag?.map((t) => <Tag key={t} t={t} />)}
+            {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[0.66rem] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
           </div>
-          <h3 className={`mt-1.5 leading-[0.95] ${besar ? 'text-[1.7rem] sm:text-[2.4rem] lg:text-[3rem]' : 'text-[1.05rem] sm:text-[1.3rem]'}`}>{m.nama}</h3>
-          <p className={`mt-2 leading-snug text-redup ${besar ? 'text-[0.95rem]' : 'potong-2 text-[0.85rem]'}`}>{m.deskripsi}</p>
+          <h3 className={`mt-1.5 leading-[0.95] ${besar ? 'text-[1.7rem] sm:text-[2.4rem] lg:text-[3rem]' : 'text-[1.05rem] sm:text-[1.3rem]'} ${m.habis ? 'text-pudar' : ''}`}>{m.nama}</h3>
+          <p className={`mt-2 leading-snug ${m.habis ? 'text-pudar' : 'text-redup'} ${besar ? 'text-[0.95rem]' : 'potong-2 text-[0.85rem]'}`}>{m.deskripsi}</p>
           <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-4">
             <div className="flex flex-col gap-1.5">
-              <Skala n={m.pedas} />
+              <Skala n={m.pedas} className={m.habis ? 'opacity-60' : ''} />
               <div className="flex flex-wrap items-baseline gap-2">
-                <LabelHarga harga={m.harga} className={besar ? 'text-[1.5rem]' : 'text-[1.05rem]'} />
+                <LabelHarga harga={m.harga} coret={m.habis} className={besar ? 'text-[1.5rem]' : 'text-[1.05rem]'} />
                 {m.hargaNormal && <LabelHarga harga={m.hargaNormal} coret className="text-[0.85rem]" />}
               </div>
             </div>
             {besar ? (
-              <button type="button" onClick={() => onPilih(m)} disabled={m.habis} aria-label={`Pilih ${m.nama}, pilih opsi`} className="tombol tombol-lampu min-h-11 px-4">Pilih paket</button>
+              <button type="button" onClick={() => onPilih(m)} disabled={m.habis} aria-label={`Pilih ${m.nama}, pilih opsi`} className="tombol tombol-lampu min-h-11 px-4 disabled:cursor-not-allowed disabled:bg-garis disabled:text-redup">Pilih paket</button>
             ) : (
               <TombolTambah m={m} onPilih={onPilih} />
             )}
@@ -99,17 +100,17 @@ function UbinPaket({ m, onPilih, besar }) {
 /** Minuman: daftar ringkas satu kolom. */
 function BarisMinuman({ m, onPilih }) {
   return (
-    <li className={`flex items-center gap-3 py-3 ${m.habis ? 'opacity-60' : ''}`}>
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-tenda text-lampu"><Gelas className="h-5 w-5" /></span>
+    <li className="flex items-center gap-3 py-3">
+      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-tenda text-lampu ${m.habis ? 'opacity-60' : ''}`}><Gelas className="h-5 w-5" /></span>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-1.5">
-          <h3 className="font-sans text-[1rem] font-bold normal-case tracking-normal">{m.nama}</h3>
+          <h3 className={`font-sans text-[1rem] font-bold normal-case tracking-normal ${m.habis ? 'text-pudar' : ''}`}>{m.nama}</h3>
           {m.tag?.map((t) => <Tag key={t} t={t} />)}
           {m.habis && <span className="text-xs font-bold text-lampu">Habis malam ini</span>}
         </div>
-        <p className="text-[0.85rem] leading-snug text-redup">{m.deskripsi}</p>
+        <p className={`text-[0.85rem] leading-snug ${m.habis ? 'text-pudar' : 'text-redup'}`}>{m.deskripsi}</p>
       </div>
-      <LabelHarga harga={m.harga} className="text-[0.98rem]" />
+      <LabelHarga harga={m.harga} coret={m.habis} className="text-[0.98rem]" />
       <TombolTambah m={m} onPilih={onPilih} />
     </li>
   );

@@ -42,7 +42,7 @@ export default function TabKategori({ hitung }) {
           const n = hitung[k.id] ?? 0;
           return (
             <li key={k.id} className="shrink-0">
-              <a href={`#k-${k.id}`} data-id={k.id} aria-current={k.id === aktif ? 'true' : undefined} className={`tab ${n === 0 ? 'opacity-50' : ''}`}>
+              <a href={`#k-${k.id}`} data-id={k.id} aria-current={k.id === aktif ? 'true' : undefined} className={`tab ${n === 0 ? 'tab-kosong' : ''}`}>
                 {k.ringkas}
                 <span className="hitung" aria-label={`${n} item`}>{n}</span>
               </a>
