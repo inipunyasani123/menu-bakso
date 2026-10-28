@@ -6,6 +6,7 @@ import { rupiah } from '@/lib/format';
 import { useNampan, pilihanAwal, tambahanPilihan } from '@/lib/nampan';
 import { Plus, Minus, Cari, Tutup, Centang, Gelas, Cabai } from './Ikon';
 import Mangkuk from './Mangkuk';
+import FotoMenu from './FotoMenu';
 import Skala from './Skala';
 import LabelHarga from './LabelHarga';
 import TabKategori from './TabKategori';
@@ -39,7 +40,7 @@ function TombolTambah({ m, onPilih, className = '' }) {
   );
 }
 
-/** Ubin item 2 kolom: ilustrasi mangkuk kecil, nama, deskripsi, skala pedas, label harga, tombol tambah. */
+/** Ubin item 2 kolom: foto mangkuk (cadangan: ilustrasi), nama, deskripsi, skala pedas, label harga, tombol tambah. */
 function Ubin({ m, onPilih }) {
   return (
     <li className="ubin relative flex flex-col p-3">
@@ -47,7 +48,9 @@ function Ubin({ m, onPilih }) {
         {m.tag?.map((t) => <Tag key={t} t={t} />)}
         {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[0.66rem] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
       </div>
-      <Mangkuk p={m.mangkuk} className={`mx-auto mt-2 h-24 w-24 sm:h-28 sm:w-28 ${m.habis ? 'opacity-60' : ''}`} />
+      <FotoMenu id={m.id} sizes="(min-width: 640px) 260px, 45vw" className={`-mx-1 -mt-1 aspect-square rounded-[10px] ${m.habis ? 'opacity-60 grayscale' : ''}`}>
+        <Mangkuk p={m.mangkuk} className={`mx-auto mt-2 h-24 w-24 sm:h-28 sm:w-28 ${m.habis ? 'opacity-60' : ''}`} />
+      </FotoMenu>
       <h3 className={`mt-3 text-[0.98rem] leading-tight ${m.habis ? 'text-pudar' : ''}`}>{m.nama}</h3>
       <p className={`potong-2 mt-1 text-[0.85rem] leading-snug ${m.habis ? 'text-pudar' : 'text-redup'}`}>{m.deskripsi}</p>
       <div className="mt-auto flex items-end justify-between gap-2 pt-3">
@@ -61,13 +64,15 @@ function Ubin({ m, onPilih }) {
   );
 }
 
-/** Ubin paket hemat: ukuran berbeda-beda (bento), ilustrasi mangkuk besar, harga normal dicoret. */
+/** Ubin paket hemat: ukuran berbeda-beda (bento), foto mangkuk besar (cadangan: ilustrasi), harga normal dicoret. */
 function UbinPaket({ m, onPilih, besar }) {
   return (
     <li className={`ubin relative overflow-hidden ${besar ? 'col-span-2 lg:col-span-2 lg:row-span-2' : ''}`}>
       <div className={`flex h-full ${besar ? 'flex-row items-center gap-3 p-4 sm:gap-6 sm:p-6' : 'flex-col p-3 sm:p-4'}`}>
         <div className={`${besar ? 'order-2 shrink-0' : 'mx-auto'} ${m.habis ? 'opacity-60' : ''}`}>
-          <Mangkuk p={m.mangkuk} className={besar ? 'h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64' : 'h-24 w-24 sm:h-32 sm:w-32'} />
+          <FotoMenu id={m.id} sizes={besar ? '(min-width: 1024px) 256px, 192px' : '(min-width: 640px) 128px, 96px'} className={`rounded-full ring-4 ring-lampu/30 ${besar ? 'h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64' : 'h-24 w-24 sm:h-32 sm:w-32'}`}>
+            <Mangkuk p={m.mangkuk} className={besar ? 'h-32 w-32 sm:h-48 sm:w-48 lg:h-64 lg:w-64' : 'h-24 w-24 sm:h-32 sm:w-32'} />
+          </FotoMenu>
         </div>
         <div className={`flex min-w-0 flex-1 flex-col ${besar ? 'order-1' : 'mt-3'}`}>
           <div className="flex flex-wrap items-center gap-1.5">
@@ -101,7 +106,9 @@ function UbinPaket({ m, onPilih, besar }) {
 function BarisMinuman({ m, onPilih }) {
   return (
     <li className="flex items-center gap-3 py-3">
-      <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-tenda text-lampu ${m.habis ? 'opacity-60' : ''}`}><Gelas className="h-5 w-5" /></span>
+      <FotoMenu id={m.id} sizes="56px" className={`h-14 w-14 shrink-0 rounded-[10px] ${m.habis ? 'opacity-60 grayscale' : ''}`}>
+        <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-tenda text-lampu ${m.habis ? 'opacity-60' : ''}`}><Gelas className="h-5 w-5" /></span>
+      </FotoMenu>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-1.5">
           <h3 className={`font-sans text-[1rem] font-bold normal-case tracking-normal ${m.habis ? 'text-pudar' : ''}`}>{m.nama}</h3>
@@ -152,7 +159,9 @@ function LembarPilihan({ item, onTutup, onTambah }) {
         }}
       >
         <div className="flex items-start gap-3 border-b border-garis px-5 pb-4 pt-5">
-          {item.mangkuk && <Mangkuk p={item.mangkuk} className="h-16 w-16 shrink-0" />}
+          <FotoMenu id={item.id} sizes="80px" className="h-20 w-20 shrink-0 rounded-[10px]">
+            {item.mangkuk && <Mangkuk p={item.mangkuk} className="h-16 w-16 shrink-0" />}
+          </FotoMenu>
           <div className="min-w-0 flex-1">
             <p className="stensil">{kategori.find((k) => k.id === item.kategori)?.nama}</p>
             <h2 id="judul-pilihan" className="mt-1 text-[1.5rem]">{item.nama}</h2>

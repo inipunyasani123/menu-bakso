@@ -3,6 +3,7 @@ import { labelHari } from '@/lib/format';
 import Tanda from '@/components/Tanda';
 import Lampu from '@/components/Lampu';
 import Mangkuk from '@/components/Mangkuk';
+import FotoMenu from '@/components/FotoMenu';
 import Meja from '@/components/Meja';
 import StatusBuka from '@/components/StatusBuka';
 import Menu from '@/components/Menu';
@@ -71,7 +72,9 @@ export default function Halaman() {
                 </div>
               </div>
               <div className="mt-8 flex justify-center lg:col-span-5 lg:mt-0">
-                <Mangkuk p={{ bakso: 2, urat: 1, telur: 1, mie: 'kuning', tahu: 1, pangsit: 1, kuah: 'bening' }} className="h-48 w-48 drop-shadow-[0_24px_40px_rgba(255,181,71,0.18)] sm:h-64 sm:w-64 lg:h-80 lg:w-80" />
+                <FotoMenu id="hero" alt="Semangkuk bakso urat, telur, dan mie kuning dengan kuah bening" priority sizes="(min-width: 1024px) 320px, (min-width: 640px) 256px, 192px" className="h-48 w-48 rounded-full ring-8 ring-lampu/20 shadow-[0_24px_40px_rgba(255,181,71,0.18)] sm:h-64 sm:w-64 lg:h-80 lg:w-80">
+                  <Mangkuk p={{ bakso: 2, urat: 1, telur: 1, mie: 'kuning', tahu: 1, pangsit: 1, kuah: 'bening' }} className="h-48 w-48 drop-shadow-[0_24px_40px_rgba(255,181,71,0.18)] sm:h-64 sm:w-64 lg:h-80 lg:w-80" />
+                </FotoMenu>
               </div>
             </div>
           </div>
