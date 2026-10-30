@@ -23,7 +23,7 @@ const PENJELASAN_PEDAS = ['tanpa sambal', 'sambal sedikit', 'masih ramah', 'peda
 function Tag({ t }) {
   const gaya = { favorit: 'bg-lampu text-malam', baru: 'bg-daun text-malam' };
   const teks = { favorit: 'Favorit', baru: 'Baru' };
-  return <span className={`rounded-md px-1.5 py-0.5 text-[0.66rem] font-bold uppercase tracking-wide ${gaya[t]}`}>{teks[t]}</span>;
+  return <span className={`rounded-md px-1.5 py-0.5 text-[12px] font-bold uppercase tracking-wide ${gaya[t]}`}>{teks[t]}</span>;
 }
 
 function TombolTambah({ m, onPilih, className = '' }) {
@@ -46,7 +46,7 @@ function Ubin({ m, onPilih }) {
     <li className="ubin relative flex flex-col p-3">
       <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-1">
         {m.tag?.map((t) => <Tag key={t} t={t} />)}
-        {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[0.66rem] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
+        {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[12px] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
       </div>
       <FotoMenu id={m.id} sizes="(min-width: 640px) 260px, 45vw" className={`-mx-1 -mt-1 aspect-square rounded-[10px] ${m.habis ? 'opacity-60 grayscale' : ''}`}>
         <Mangkuk p={m.mangkuk} className={`mx-auto mt-2 h-24 w-24 sm:h-28 sm:w-28 ${m.habis ? 'opacity-60' : ''}`} />
@@ -78,7 +78,7 @@ function UbinPaket({ m, onPilih, besar }) {
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="stensil">Paket</span>
             {m.tag?.map((t) => <Tag key={t} t={t} />)}
-            {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[0.66rem] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
+            {m.habis && <span className="rounded-md bg-malam px-1.5 py-0.5 text-[12px] font-bold uppercase tracking-wide text-lampu">Habis malam ini</span>}
           </div>
           <h3 className={`mt-1.5 leading-[0.95] ${besar ? 'text-[1.7rem] sm:text-[2.4rem] lg:text-[3rem]' : 'text-[1.05rem] sm:text-[1.3rem]'} ${m.habis ? 'text-pudar' : ''}`}>{m.nama}</h3>
           <p className={`mt-2 leading-snug ${m.habis ? 'text-pudar' : 'text-redup'} ${besar ? 'text-[0.95rem]' : 'potong-2 text-[0.85rem]'}`}>{m.deskripsi}</p>

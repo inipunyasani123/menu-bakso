@@ -110,7 +110,7 @@ export default function Halaman() {
                 </div>
                 <QR url={`${site.url}/?meja=${CONTOH_MEJA}`} className="mt-3 w-full text-malam" label={`Kode QR contoh untuk meja ${CONTOH_MEJA}`} />
                 <p className="mt-3 text-center font-display text-base uppercase">{site.nama}</p>
-                <p className="text-center text-[0.7rem] text-[#5a5468]">menu-bakso.pintuweb.id/?meja={CONTOH_MEJA}</p>
+                <p className="text-center text-[12px] text-[#5a5468]">menu-bakso.pintuweb.id/?meja={CONTOH_MEJA}</p>
               </div>
             </div>
           </div>
